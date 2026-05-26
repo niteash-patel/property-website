@@ -1,193 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ansh Developer</title>
 
-  <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Ravi Home Property Dealer</title>
-
-  <link rel="stylesheet"
-  href="{{ url_for('static', filename='style.css') }}">
-
-  <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-<header>
+    <!-- =========================
+         NAVBAR
+    ========================== -->
 
-  <div class="logo">
+    <nav class="navbar">
 
-    <i class="fa-solid fa-building"></i>
+        <div class="logo">
+            🏨 <span>Ansh Developer</span>
+        </div>
 
-    Ansh Developer Con-No:8840199718,9807272887
+        <div class="nav-links">
 
-  </div>
+            <a href="/">Home</a>
 
-  <nav>
+            <a href="#properties">
+                Properties
+            </a>
 
-    <a href="/">Home</a>
+            {% if session.get('admin') %}
 
-    <a href="#properties">Properties</a>
+                <a href="/add-property">
+                    Upload Property
+                </a>
 
-    {% if current_user.is_authenticated %}
+                <a href="/logout">
+                    Logout
+                </a>
 
-      <a href="/add">Upload Property</a>
+            {% else %}
 
-      <a href="/logout">Logout</a>
+                <a href="/login">
+                    Admin Login
+                </a>
 
-    {% else %}
+            {% endif %}
 
-      <a href="/login">Admin Login</a>
+        </div>
 
-    {% endif %}
+    </nav>
 
-  </nav>
 
-</header>
+    <!-- =========================
+         HERO SECTION
+    ========================== -->
 
-<section class="hero">
+    <section class="hero">
 
-  <div class="overlay"></div>
+        <div class="hero-content">
 
-  <div class="hero-content">
+            <h2>
+                Namaste 🙏
+            </h2>
 
-    <div class="typing-box">
+            <h1>
+                Mai Aapki Kaise Madad
+                Kar Sakta Hu?
+            </h1>
 
-      <h2 class="welcome-text">
+            <p>
+                Buy, Sell & Rent Premium Villas, Flats & Plots
+            </p>
 
-        Namaste 🙏
+            <a href="#properties" class="hero-btn">
+                Explore Properties
+            </a>
 
-      </h2>
+        </div>
 
-      <h1 class="typing-text">
+    </section>
 
-        Mai Aapki Kaise Madad Kar Sakta Hu?
 
-      </h1>
+    <!-- =========================
+         PROPERTY SECTION
+    ========================== -->
+
+    <h2 class="section-title" id="properties">
+        Featured Properties
+    </h2>
+
+    <div class="property-container">
+
+        {% for property in properties %}
+
+        <div class="property-card">
+
+            <!-- PROPERTY IMAGES -->
+
+            <div class="property-images">
+
+                {% for image in property.images.split(',') %}
+
+                    <img src="{{ url_for('static', filename='uploads/' + image) }}">
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- PROPERTY INFO -->
+
+            <div class="property-info">
+
+                <h3>
+                    {{ property.title }}
+                </h3>
+
+                <p class="location">
+                    📍 {{ property.location }}
+                </p>
+
+                <p class="price">
+                    ₹ {{ property.price }}
+                </p>
+
+
+                <!-- BUTTONS -->
+
+                <div class="btn-group">
+
+                    <a href="tel:8840199718" class="call-btn">
+                        📞 Call Now
+                    </a>
+
+                    <a href="https://wa.me/918840199718"
+                       target="_blank"
+                       class="whatsapp-btn">
+
+                        💬 WhatsApp
+
+                    </a>
+
+                </div>
+
+
+                <!-- DELETE BUTTON -->
+
+                {% if session.get('admin') %}
+
+                <form action="/delete/{{ property.id }}"
+                      method="POST">
+
+                    <button type="submit"
+                            class="delete-btn">
+
+                        Delete Property
+
+                    </button>
+
+                </form>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
 
     </div>
 
-    <p>
 
-      Buy, Sell & Rent Premium Villas, Flats & Plots
+    <!-- =========================
+         FOOTER
+    ========================== -->
 
-    </p>
+    <footer class="footer">
 
-    <a href="#properties" class="hero-btn">
+        <h3>
+            Dream Home Property Dealer
+        </h3>
 
-      Explore Properties
-
-    </a>
-
-  </div>
-
-</section>
-
-<section class="section-title">
-
-  <h2>Featured Properties</h2>
-
-</section>
-
-<section class="properties" id="properties">
-
-{% for property in properties %}
-
-<div class="card">
-
-  {% set image_list = property.images.split(',') %}
-
-  <div class="gallery">
-
-    {% for img in image_list %}
-
-    <a href="{{ url_for('static', filename='uploads/' + img) }}"
-    target="_blank">
-
-      <img src="{{ url_for('static',
-      filename='uploads/' + img) }}">
-
-    </a>
-
-    {% endfor %}
-
-  </div>
-
-  <div class="card-content">
-
-    <h3>{{ property.title }}</h3>
-
-    <p>
-
-      <i class="fa-solid fa-location-dot"></i>
-
-      {{ property.location }}
-
-    </p>
-
-    <div class="price">
-
-      {{ property.price }}
-
-    </div>
-
-    <div class="btn-group">
-
-      <a href="tel:+918840199718"
-      class="call-btn">
-
-        <i class="fa-solid fa-phone"></i>
-
-        Call Now
-
-      </a>
-
-      <a href="https://wa.me/918840199718"
-      class="whatsapp-btn"
-      target="_blank">
-
-        <i class="fa-brands fa-whatsapp"></i>
-
-        WhatsApp
-
-      </a>
-
-      {% if current_user.is_authenticated %}
-
-      <a href="/delete/{{ property.id }}"
-      class="delete-btn"
-      onclick="return confirm('Delete this property?')">
-
-        <i class="fa-solid fa-trash"></i>
-
-        Delete
-
-      </a>
-
-      {% endif %}
-
-    </div>
-
-  </div>
-
-</div>
-
-{% endfor %}
-
-</section>
-
-<footer>
-
-  <h3>Ansh Developer</h3>
-
-</footer>
+    </footer>
 
 </body>
-
 </html>
