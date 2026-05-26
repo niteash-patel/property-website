@@ -60,10 +60,10 @@ html,body{
     width:100%;
     min-height:100vh;
 
-    background:
+    background-image:
     linear-gradient(
-    rgba(0,0,0,0.4),
-    rgba(0,0,0,0.4)),
+    rgba(0,0,0,0.45),
+    rgba(0,0,0,0.45)),
     url("../images/bg.png");
 
     background-size:cover;
@@ -75,6 +75,7 @@ html,body{
     align-items:center;
 
     text-align:center;
+    padding:20px;
 }
 
 .hero-content{
