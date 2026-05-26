@@ -3,185 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ansh Developer</title>
+    <title>Dream Home Property</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-    <!-- =========================
-         NAVBAR
-    ========================== -->
+<!-- ================= NAVBAR ================= -->
 
-    <nav class="navbar">
+<nav class="navbar">
 
-        <div class="logo">
-            🏨 <span>Ansh Developer</span>
+    <div class="logo">
+        Dream Home
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        <a href="#properties">
+            Properties
+        </a>
+
+        {% if session.get('admin') %}
+
+        <a href="/add">
+            Upload Property
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+        {% else %}
+
+        <a href="/login">
+            Admin Login
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h2>
+            Namaste 🙏
+        </h2>
+
+        <h1>
+            Mai Aapki Kaise
+            Madad Kar Sakta Hu?
+        </h1>
+
+        <p>
+            Buy • Sell • Rent Premium Properties
+        </p>
+
+        <a href="#properties"
+           class="hero-btn">
+
+            Explore Properties
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROPERTY SECTION ================= -->
+
+<h2 class="section-title"
+    id="properties">
+
+    Featured Properties
+
+</h2>
+
+
+<div class="property-container">
+
+    {% for property in properties %}
+
+    <div class="property-card">
+
+        <!-- PROPERTY IMAGES -->
+
+        <div class="property-images">
+
+            {% for image in property.images.split(',') %}
+
+            <img src="{{ url_for('static',
+            filename='uploads/' + image) }}">
+
+            {% endfor %}
+
         </div>
 
-        <div class="nav-links">
 
-            <a href="/">Home</a>
+        <!-- PROPERTY INFO -->
 
-            <a href="#properties">
-                Properties
-            </a>
+        <div class="property-info">
+
+            <h3>
+                {{ property.title }}
+            </h3>
+
+            <p class="location">
+
+                📍 {{ property.location }}
+
+            </p>
+
+            <p class="price">
+
+                ₹ {{ property.price }}
+
+            </p>
+
+
+            <!-- BUTTONS -->
+
+            <div class="btn-group">
+
+                <a href="tel:8840199718"
+                   class="call-btn">
+
+                    📞 Call
+
+                </a>
+
+
+                <a href="https://wa.me/918840199718"
+                   target="_blank"
+                   class="whatsapp-btn">
+
+                    💬 WhatsApp
+
+                </a>
+
+            </div>
+
+
+            <!-- DELETE BUTTON -->
 
             {% if session.get('admin') %}
 
-                <a href="/add-property">
-                    Upload Property
-                </a>
+            <form action="/delete/{{ property.id }}"
+                  method="POST">
 
-                <a href="/logout">
-                    Logout
-                </a>
+                <button type="submit"
+                        class="delete-btn">
 
-            {% else %}
+                    Delete Property
 
-                <a href="/login">
-                    Admin Login
-                </a>
+                </button>
+
+            </form>
 
             {% endif %}
 
         </div>
 
-    </nav>
-
-
-    <!-- =========================
-         HERO SECTION
-    ========================== -->
-
-    <section class="hero">
-
-        <div class="hero-content">
-
-            <h2>
-                Namaste 🙏
-            </h2>
-
-            <h1>
-                Mai Aapki Kaise Madad
-                Kar Sakta Hu?
-            </h1>
-
-            <p>
-                Buy, Sell & Rent Premium Villas, Flats & Plots
-            </p>
-
-            <a href="#properties" class="hero-btn">
-                Explore Properties
-            </a>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         PROPERTY SECTION
-    ========================== -->
-
-    <h2 class="section-title" id="properties">
-        Featured Properties
-    </h2>
-
-    <div class="property-container">
-
-        {% for property in properties %}
-
-        <div class="property-card">
-
-            <!-- PROPERTY IMAGES -->
-
-            <div class="property-images">
-
-                {% for image in property.images.split(',') %}
-
-                    <img src="{{ url_for('static', filename='uploads/' + image) }}">
-
-                {% endfor %}
-
-            </div>
-
-
-            <!-- PROPERTY INFO -->
-
-            <div class="property-info">
-
-                <h3>
-                    {{ property.title }}
-                </h3>
-
-                <p class="location">
-                    📍 {{ property.location }}
-                </p>
-
-                <p class="price">
-                    ₹ {{ property.price }}
-                </p>
-
-
-                <!-- BUTTONS -->
-
-                <div class="btn-group">
-
-                    <a href="tel:8840199718" class="call-btn">
-                        📞 Call Now
-                    </a>
-
-                    <a href="https://wa.me/918840199718"
-                       target="_blank"
-                       class="whatsapp-btn">
-
-                        💬 WhatsApp
-
-                    </a>
-
-                </div>
-
-
-                <!-- DELETE BUTTON -->
-
-                {% if session.get('admin') %}
-
-                <form action="/delete/{{ property.id }}"
-                      method="POST">
-
-                    <button type="submit"
-                            class="delete-btn">
-
-                        Delete Property
-
-                    </button>
-
-                </form>
-
-                {% endif %}
-
-            </div>
-
-        </div>
-
-        {% endfor %}
-
     </div>
 
+    {% endfor %}
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
+</div>
 
-    <footer class="footer">
 
-        <h3>
-            Dream Home Property Dealer
-        </h3>
+<!-- ================= FOOTER ================= -->
 
-    </footer>
+<footer class="footer">
+
+    <h3>
+
+        Dream Home Property Dealer
+
+    </h3>
+
+</footer>
 
 </body>
 </html>
