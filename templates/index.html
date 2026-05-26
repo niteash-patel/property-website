@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ravi Home Property Dealer</title>
+
+  <link rel="stylesheet"
+  href="{{ url_for('static', filename='style.css') }}">
+
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+
+    <i class="fa-solid fa-building"></i>
+
+    Ansh Developer Con-No:8840199718,9807272887
+
+  </div>
+
+  <nav>
+
+    <a href="/">Home</a>
+
+    <a href="#properties">Properties</a>
+
+    {% if current_user.is_authenticated %}
+
+      <a href="/add">Upload Property</a>
+
+      <a href="/logout">Logout</a>
+
+    {% else %}
+
+      <a href="/login">Admin Login</a>
+
+    {% endif %}
+
+  </nav>
+
+</header>
+
+<section class="hero">
+
+  <div class="overlay"></div>
+
+  <div class="hero-content">
+
+    <div class="typing-box">
+
+      <h2 class="welcome-text">
+
+        Namaste 🙏
+
+      </h2>
+
+      <h1 class="typing-text">
+
+        Mai Aapki Kaise Madad Kar Sakta Hu?
+
+      </h1>
+
+    </div>
+
+    <p>
+
+      Buy, Sell & Rent Premium Villas, Flats & Plots
+
+    </p>
+
+    <a href="#properties" class="hero-btn">
+
+      Explore Properties
+
+    </a>
+
+  </div>
+
+</section>
+
+<section class="section-title">
+
+  <h2>Featured Properties</h2>
+
+</section>
+
+<section class="properties" id="properties">
+
+{% for property in properties %}
+
+<div class="card">
+
+  {% set image_list = property.images.split(',') %}
+
+  <div class="gallery">
+
+    {% for img in image_list %}
+
+    <a href="{{ url_for('static', filename='uploads/' + img) }}"
+    target="_blank">
+
+      <img src="{{ url_for('static',
+      filename='uploads/' + img) }}">
+
+    </a>
+
+    {% endfor %}
+
+  </div>
+
+  <div class="card-content">
+
+    <h3>{{ property.title }}</h3>
+
+    <p>
+
+      <i class="fa-solid fa-location-dot"></i>
+
+      {{ property.location }}
+
+    </p>
+
+    <div class="price">
+
+      {{ property.price }}
+
+    </div>
+
+    <div class="btn-group">
+
+      <a href="tel:+918840199718"
+      class="call-btn">
+
+        <i class="fa-solid fa-phone"></i>
+
+        Call Now
+
+      </a>
+
+      <a href="https://wa.me/918840199718"
+      class="whatsapp-btn"
+      target="_blank">
+
+        <i class="fa-brands fa-whatsapp"></i>
+
+        WhatsApp
+
+      </a>
+
+      {% if current_user.is_authenticated %}
+
+      <a href="/delete/{{ property.id }}"
+      class="delete-btn"
+      onclick="return confirm('Delete this property?')">
+
+        <i class="fa-solid fa-trash"></i>
+
+        Delete
+
+      </a>
+
+      {% endif %}
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endfor %}
+
+</section>
+
+<footer>
+
+  <h3>Ansh Developer</h3>
+
+</footer>
+
+</body>
+
+</html>

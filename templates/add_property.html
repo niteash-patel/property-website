@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+  content="width=device-width, initial-scale=1.0">
+
+  <title>Add Property</title>
+
+  <link rel="stylesheet"
+  href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="form-container">
+
+  <h2>Add Property</h2>
+
+  <form method="POST"
+  enctype="multipart/form-data">
+
+    <input type="text"
+    name="title"
+    placeholder="Property Title"
+    required>
+
+    <input type="text"
+    name="price"
+    placeholder="Property Price"
+    required>
+
+    <input type="text"
+    name="location"
+    placeholder="Location"
+    required>
+
+    <input type="file"
+    name="image"
+    multiple
+    required>
+
+    <button type="submit">
+
+      Upload Property
+
+    </button>
+
+  </form>
+
+</div>
+
+</body>
+
+</html>
