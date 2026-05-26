@@ -61,9 +61,10 @@ html,body{
     min-height:100vh;
 
     background:
-    linear-gradient(rgba(0,0,0,0.6),
-    rgba(0,0,0,0.6)),
-    url("/static/images/bg.png");
+    linear-gradient(
+    rgba(0,0,0,0.4),
+    rgba(0,0,0,0.4)),
+    url("../images/bg.png");
 
     background-size:cover;
     background-position:center;
@@ -74,8 +75,6 @@ html,body{
     align-items:center;
 
     text-align:center;
-
-    padding:20px;
 }
 
 .hero-content{
